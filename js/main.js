@@ -40,7 +40,7 @@
 
     // --- Scroll animations (Intersection Observer) ---
     var animatedElements = document.querySelectorAll(
-        '.service-card, .work-card, .blog-card, .stat-card, .about__text, .about__industries, .contact__content, .contact__form-wrap, .manifesto__container'
+        '.service-card, .work-card, .blog-card, .stat-card, .about__text, .about__industries, .about__profile, .contact__content, .contact__form-wrap, .manifesto__container, .challenges__col'
     );
 
     animatedElements.forEach(function (el) {
