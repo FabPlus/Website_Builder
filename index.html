@@ -3,555 +3,1143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>State of Gen AI in Marketing
-    </title>
-    
+    <title>90-Day AI Action Plan for Marketing & Communications Teams</title>
+    <meta name="description" content="A step-by-step plan to safely integrate AI into your marketing and communications workflows in 90 days. Built for in-house teams with something to lose.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Custom Palette & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'display': ['Space Grotesk', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'neo': {
+                            'dark': '#0a0a12',
+                            'darker': '#06060c',
+                            'card': '#12121e',
+                            'border': '#1e1e32',
+                            'pink': '#ff2d78',
+                            'magenta': '#d946ef',
+                            'violet': '#8b5cf6',
+                            'indigo': '#6366f1',
+                            'muted': '#94a3b8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* Palette: "Neon Future"
-           Based on vibrant, high-contrast tech trends.
-           Primary Dark: #1e1b4b (Indigo 950)
-           Primary Light: #f8fafc (Slate 50)
-           Accent Cyan: #06b6d4 (Cyan 500)
-           Accent Pink: #ec4899 (Pink 500)
-           Accent Purple: #8b5cf6 (Violet 500)
-        */
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-            color: #1f2937;
+            background-color: #0a0a12;
+            color: #e2e8f0;
+            overflow-x: hidden;
         }
 
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Gradient text */
         .gradient-text {
-            background: linear-gradient(90deg, #06b6d4, #ec4899);
+            background: linear-gradient(135deg, #ff2d78, #d946ef, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .card {
-            background-color: white;
+        .gradient-text-subtle {
+            background: linear-gradient(135deg, #ff2d78, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glow effects */
+        .glow-pink {
+            box-shadow: 0 0 20px rgba(255, 45, 120, 0.3), 0 0 60px rgba(255, 45, 120, 0.1);
+        }
+
+        .glow-pink-lg {
+            box-shadow: 0 0 30px rgba(255, 45, 120, 0.4), 0 0 80px rgba(255, 45, 120, 0.15);
+        }
+
+        .glow-pink-subtle {
+            box-shadow: 0 0 15px rgba(255, 45, 120, 0.15);
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: rgba(18, 18, 30, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 45, 120, 0.1);
             border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        .glass-card:hover {
+            border-color: rgba(255, 45, 120, 0.25);
+            box-shadow: 0 0 30px rgba(255, 45, 120, 0.08);
         }
 
-        /* Chart Container Strict Styling */
-        .chart-container {
+        /* Animated background orbs */
+        .hero-bg {
             position: relative;
-            width: 100%;
-            max-width: 100%; /* Constraints handled by grid/parent */
-            height: 350px; /* Base height */
-            margin: 0 auto;
+            overflow: hidden;
         }
 
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-        
-        /* Specific max-widths for readability */
-        .chart-max-w-md { max-width: 500px; }
-        .chart-max-w-lg { max-width: 800px; }
-
-        /* Flow Diagram Styling */
-        .flow-step {
-            border: 2px solid #e5e7eb;
-            background: #ffffff;
-            position: relative;
-        }
-        .flow-step::after {
-            content: "↓";
+        .hero-bg::before {
+            content: '';
             position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            color: #9ca3af;
-            font-weight: bold;
+            top: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 45, 120, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
         }
-        .flow-step:last-child::after {
-            content: none;
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
         }
-        
-        @media (min-width: 768px) {
-            .flow-container-horizontal .flow-step::after {
-                content: "→";
-                bottom: auto;
-                right: -25px;
-                top: 50%;
-                left: auto;
-                transform: translateY(-50%);
-            }
-            .flow-container-horizontal .flow-step:last-child::after {
-                content: none;
-            }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
         }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 45, 120, 0.3), 0 0 60px rgba(255, 45, 120, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(255, 45, 120, 0.5), 0 0 80px rgba(255, 45, 120, 0.2); }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff2d78, #d946ef);
+            color: white;
+            font-weight: 700;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem 2rem;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse-glow 3s ease-in-out infinite;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(255, 45, 120, 0.5), 0 0 100px rgba(255, 45, 120, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ff2d78;
+            font-weight: 600;
+            border: 2px solid rgba(255, 45, 120, 0.5);
+            border-radius: 0.75rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 45, 120, 0.1);
+            border-color: #ff2d78;
+            box-shadow: 0 0 20px rgba(255, 45, 120, 0.2);
+        }
+
+        /* Form inputs */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff2d78;
+            box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder {
+            color: #64748b;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.3), transparent);
+        }
+
+        /* Bullet check */
+        .bullet-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .bullet-check::before {
+            content: '';
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            background: linear-gradient(135deg, #ff2d78, #d946ef);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='14' height='14'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 14px;
+        }
+
+        /* Number circle */
+        .number-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff2d78, #d946ef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* FAQ accordion */
+        .faq-item {
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 45, 120, 0.2);
+        }
+
+        .faq-toggle {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: rgba(18, 18, 30, 0.5);
+            color: #e2e8f0;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .faq-toggle:hover {
+            background: rgba(255, 45, 120, 0.05);
+        }
+
+        .faq-toggle .icon {
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            color: #ff2d78;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .faq-item.active .faq-toggle .icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 500px;
+        }
+
+        .faq-content-inner {
+            padding: 0 1.5rem 1.5rem;
+            color: #94a3b8;
+            line-height: 1.75;
+        }
+
+        /* Credibility strip */
+        .credibility-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.5rem;
+        }
+
+        .credibility-strip span {
+            color: #64748b;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .credibility-strip span::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 45, 120, 0.5);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Roadmap timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #ff2d78, #8b5cf6);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background: #ff2d78;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 45, 120, 0.5);
+        }
+
+        /* Scroll animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            background-image:
+                linear-gradient(rgba(255, 45, 120, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 45, 120, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Thank you page */
+        #thankYouPage {
+            display: none;
+        }
+
+        #thankYouPage.active {
+            display: block;
+        }
+
+        #mainPage.hidden {
+            display: none;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(255, 45, 120, 0.3);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a12; }
+        ::-webkit-scrollbar-thumb { background: #1e1e32; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2d78; }
     </style>
-
-    <!-- Source Material Analysis & Plan Summary
-         1. Topic: Gen AI Adoption in Marketing.
-         2. Narrative: Explosion of use -> Specific applications -> Efficiency Gains -> Barriers -> Future.
-         3. Vis Selection:
-            - Adoption Rate: Donut Chart (Goal: Inform/Compare).
-            - Use Cases: Horizontal Bar (Goal: Compare categories).
-            - Efficiency: Plotly Histogram (Goal: Distribution).
-            - Risks: Radar Chart (Goal: Relationships/Multivariate comparison).
-            - Workflow: HTML Diagram (Goal: Process).
-            - Budget: Line Chart (Goal: Trend).
-         4. Constraints: NO SVG, NO Mermaid. Chart.js & Plotly (Canvas) only.
-    -->
 </head>
-<body class="antialiased">
+<body class="antialiased grid-overlay">
 
-    <!-- Header Section -->
-    <header class="bg-slate-900 text-white py-16 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-cyan-400 uppercase bg-slate-800 rounded-full">
-                2026 Industry Report
-            </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-                The State of <span class="gradient-text">Gen AI</span> in Marketing
-            </h1>
-            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
-                From experimental novelty to daily necessity. How 73% of marketing professionals are reshaping the industry with artificial intelligence.
-            </p>
-        </div>
-    </header>
+<!-- ==================== MAIN PAGE ==================== -->
+<div id="mainPage">
 
-    <!-- Main Content Grid -->
-    <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero-bg min-h-screen flex items-center relative pt-8 pb-16 md:py-0">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-        <!-- Intro/Hook Section -->
-        <div class="md:col-span-12 mb-8">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-cyan-500 pl-4">The Adoption Tipping Point</h2>
-            <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                In the last 12 months, Generative AI has matured from early adopters to the early majority. Marketing departments, driven by the need for content velocity and personalization at scale, are leading the charge across the enterprise.
-            </p>
-        </div>
+                <!-- Hero Copy -->
+                <div class="order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[rgba(255,45,120,0.1)] to-[rgba(139,92,246,0.1)] border border-[rgba(255,45,120,0.2)] mb-6">
+                        <span class="w-2 h-2 rounded-full bg-neo-pink animate-pulse"></span>
+                        <span class="text-sm font-medium text-neo-pink">Free for Marketing & Comms Leaders</span>
+                    </div>
 
-        <!-- KPI Cards (Big Numbers) -->
-        <div class="md:col-span-4 card p-8 text-center border-t-4 border-cyan-500">
-            <h3 class="text-gray-500 font-semibold uppercase tracking-wide text-sm">Adoption Rate</h3>
-            <p class="text-6xl font-extrabold text-slate-800 my-4">73%</p>
-            <p class="text-gray-600 text-sm">of marketing orgs now use Gen AI tools weekly.</p>
-        </div>
-        <div class="md:col-span-4 card p-8 text-center border-t-4 border-pink-500">
-            <h3 class="text-gray-500 font-semibold uppercase tracking-wide text-sm">Efficiency Gain</h3>
-            <p class="text-6xl font-extrabold text-slate-800 my-4">5h+</p>
-            <p class="text-gray-600 text-sm">hours saved per employee per week on manual tasks.</p>
-        </div>
-        <div class="md:col-span-4 card p-8 text-center border-t-4 border-violet-500">
-            <h3 class="text-gray-500 font-semibold uppercase tracking-wide text-sm">Budget Growth</h3>
-            <p class="text-6xl font-extrabold text-slate-800 my-4">85%</p>
-            <p class="text-gray-600 text-sm">of CMOs plan to increase AI investment in 2026.</p>
-        </div>
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] mb-6">
+                        A 90-Day <span class="gradient-text">AI Action Plan</span> for Marketing & Communications Teams
+                    </h1>
 
-        <!-- Chart 1: Market Penetration (Donut) -->
-        <div class="md:col-span-6 card p-6 flex flex-col">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Adoption Segmentation</h3>
-                <p class="text-sm text-gray-500 mt-1">While the majority are "Fully Integrated," a significant portion remains in the "Experimental" phase.</p>
-            </div>
-            <div class="chart-container chart-max-w-md">
-                <canvas id="adoptionChart"></canvas>
-            </div>
-        </div>
+                    <p class="text-lg text-slate-400 leading-relaxed mb-8 max-w-xl">
+                        If you lead marketing or communications in a mid&ndash;large organization and feel behind on AI, this step-by-step plan shows you exactly how to safely integrate AI into your team's workflows in 90 days&mdash;without risking your brand, reputation, or compliance.
+                    </p>
 
-        <!-- Chart 2: Use Cases (Horizontal Bar) -->
-        <div class="md:col-span-6 card p-6 flex flex-col">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Top Use Cases</h3>
-                <p class="text-sm text-gray-500 mt-1">Text generation remains king, but visual creation and code assistance are rapidly climbing.</p>
-            </div>
-            <div class="chart-container w-full">
-                <canvas id="useCaseChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Section Break -->
-        <div class="md:col-span-12 mt-8 mb-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-pink-500 pl-4">Impact & Friction</h2>
-            <p class="text-gray-600 text-lg leading-relaxed">
-                Adoption is not without its challenges. While the efficiency gains are measurable and significant, trust remains the primary barrier to full automation. Marketers are adopting a "Human-in-the-Loop" approach to mitigate risks around accuracy and brand safety.
-            </p>
-        </div>
-
-        <!-- Chart 3: Risks Radar (Radar) -->
-        <div class="md:col-span-5 card p-6">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-gray-800">The Trust Gap (Barriers)</h3>
-                <p class="text-sm text-gray-500 mt-1">Concerns regarding accuracy and copyright prevent fully autonomous workflows.</p>
-            </div>
-            <div class="chart-container chart-max-w-md">
-                <canvas id="riskChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Chart 4: Efficiency Distribution (Plotly Histogram) -->
-        <div class="md:col-span-7 card p-6">
-            <div class="mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Hours Saved Distribution</h3>
-                <p class="text-sm text-gray-500 mt-1">Distribution of reported weekly time savings. The "Power User" tail is growing.</p>
-            </div>
-            <!-- Plotly Container -->
-            <div id="plotlyEfficiency" class="w-full h-80 md:h-96"></div>
-        </div>
-
-        <!-- Section Break: Process -->
-        <div class="md:col-span-12 mt-8">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-violet-500 pl-4">The New Workflow</h2>
-            <p class="text-gray-600 text-lg leading-relaxed mb-8">
-                The traditional "Idea &rarr; Draft &rarr; Edit &rarr; Publish" linear path is obsolete. It has been replaced by a circular, iterative loop where AI acts as both the research assistant and the junior copywriter.
-            </p>
-        </div>
-
-        <!-- HTML Diagram: AI Workflow -->
-        <div class="md:col-span-12 card p-8 bg-gradient-to-r from-slate-50 to-slate-100">
-            <div class="flex flex-col md:flex-row justify-between items-center flow-container-horizontal space-y-8 md:space-y-0 md:space-x-4">
-                
-                <!-- Step 1 -->
-                <div class="flow-step p-6 rounded-lg shadow-sm w-full md:w-1/4 text-center">
-                    <div class="text-3xl mb-2">🧠</div>
-                    <h4 class="font-bold text-slate-800">Prompt Engineering</h4>
-                    <p class="text-xs text-gray-500 mt-2">Context injection & goal setting</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="bullet-check text-slate-300">Map AI to your team's real marketing and comms workflows in under an hour.</li>
+                        <li class="bullet-check text-slate-300">Launch your first safe AI-enhanced campaign or comms initiative in the next 30 days.</li>
+                        <li class="bullet-check text-slate-300">Get plug-and-play workflows and prompts your team can use immediately.</li>
+                        <li class="bullet-check text-slate-300">Align leadership, legal, IT, and your team around a clear plan.</li>
+                        <li class="bullet-check text-slate-300">Reduce repetitive work while protecting your brand voice and trust.</li>
+                    </ul>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="flow-step p-6 rounded-lg shadow-sm w-full md:w-1/4 text-center border-cyan-400 border-2">
-                    <div class="text-3xl mb-2">⚡</div>
-                    <h4 class="font-bold text-cyan-700">AI Generation</h4>
-                    <p class="text-xs text-gray-500 mt-2">Drafting, variations, & image synth</p>
-                </div>
+                <!-- Hero Form -->
+                <div class="order-1 lg:order-2">
+                    <div class="glass-card p-8 glow-pink-subtle">
+                        <h2 class="font-display text-2xl font-bold text-white mb-2">Get the 90-Day AI Action Plan</h2>
+                        <p class="text-neo-pink font-semibold text-sm mb-6 tracking-wide uppercase">100% Free</p>
 
-                <!-- Step 3 -->
-                <div class="flow-step p-6 rounded-lg shadow-sm w-full md:w-1/4 text-center">
-                    <div class="text-3xl mb-2">👀</div>
-                    <h4 class="font-bold text-slate-800">Human Audit</h4>
-                    <p class="text-xs text-gray-500 mt-2">Fact-checking, tone edit, & legal</p>
-                </div>
+                        <form id="heroForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-slate-400 mb-1.5">First name</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Jane" required>
+                            </div>
+                            <div>
+                                <label for="workEmail" class="block text-sm font-medium text-slate-400 mb-1.5">Work email</label>
+                                <input type="email" id="workEmail" name="workEmail" class="form-input" placeholder="jane@company.com" required>
+                            </div>
+                            <div>
+                                <label for="role" class="block text-sm font-medium text-slate-400 mb-1.5">Role</label>
+                                <select id="role" name="role" class="form-input" required>
+                                    <option value="" disabled selected>Select your role</option>
+                                    <option value="head-marketing">Head of Marketing</option>
+                                    <option value="head-comms">Head of Communications</option>
+                                    <option value="marketing-director">Marketing Director</option>
+                                    <option value="comms-director">Communications Director</option>
+                                    <option value="marketing-manager">Marketing Manager</option>
+                                    <option value="comms-manager">Communications Manager</option>
+                                    <option value="vp-marketing">VP Marketing</option>
+                                    <option value="cmo">CMO</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="companySize" class="block text-sm font-medium text-slate-400 mb-1.5">Company size</label>
+                                <select id="companySize" name="companySize" class="form-input" required>
+                                    <option value="" disabled selected>Select company size</option>
+                                    <option value="200-500">200&ndash;500 employees</option>
+                                    <option value="501-1000">501&ndash;1,000 employees</option>
+                                    <option value="1001-2500">1,001&ndash;2,500 employees</option>
+                                    <option value="2501-5000">2,501&ndash;5,000 employees</option>
+                                    <option value="5000+">5,000+ employees</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="country" class="block text-sm font-medium text-slate-400 mb-1.5">Country</label>
+                                <input type="text" id="country" name="country" class="form-input" placeholder="e.g., Germany" required>
+                            </div>
 
-                <!-- Step 4 -->
-                <div class="flow-step p-6 rounded-lg shadow-sm w-full md:w-1/4 text-center bg-slate-800 text-white">
-                    <div class="text-3xl mb-2">🚀</div>
-                    <h4 class="font-bold text-white">Deploy & Analyze</h4>
-                    <p class="text-xs text-gray-400 mt-2">Publishing & performance feedback</p>
-                </div>
+                            <button type="submit" class="btn-primary w-full mt-2">
+                                Send Me the 90-Day Action Plan
+                            </button>
+                        </form>
 
+                        <p class="text-xs text-slate-500 mt-4 text-center leading-relaxed">
+                            No spam. No fluff. Just a practitioner-built plan for in-house marketing and comms teams.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <p class="text-center text-xs text-gray-400 mt-8 italic">Figure 1.0: The "Human-in-the-Loop" Generative Cycle</p>
+
+            <!-- Credibility Strip -->
+            <div class="mt-16 pt-8 border-t border-[rgba(255,255,255,0.06)]">
+                <p class="text-center text-sm text-slate-500 mb-4 font-medium">Trusted by marketing and communications leaders in:</p>
+                <div class="credibility-strip">
+                    <span>Financial services</span>
+                    <span>Professional services</span>
+                    <span>Tech & SaaS</span>
+                    <span>Non-profits</span>
+                    <span>Public sector</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Chart 5: Trend Line (Chart.js Line) -->
-        <div class="md:col-span-12 card p-6 mt-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800">Investment Trajectory</h3>
-                    <p class="text-sm text-gray-500 mt-1">Projected % of total marketing budget allocated to AI tools.</p>
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 2: THIS IS FOR YOU IF ========== -->
+    <section class="py-20 md:py-28 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+                        Is This <span class="gradient-text-subtle">for You</span>?
+                    </h2>
+                    <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                        This 90-day AI action plan is specifically designed for in-house marketing and communications leaders who:
+                    </p>
+                </div>
+
+                <div class="space-y-5">
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-pink mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">Lead a marketing, communications, or internal comms team in a <strong class="text-white">200&ndash;5,000 employee organization</strong>.</p>
+                    </div>
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-magenta mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">Feel pressure from leadership to "do something with AI" but don't want to <strong class="text-white">gamble with your brand or reputation</strong>.</p>
+                    </div>
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-violet mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">See <strong class="text-white">scattered AI experiments</strong> across your team&mdash;but no coherent strategy, governance, or standards.</p>
+                    </div>
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-pink mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">Are tired of <strong class="text-white">generic AI webinars</strong> that talk about tools but never show how to change real workflows.</p>
+                    </div>
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-magenta mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">Want to move from ad-hoc prompting to a <strong class="text-white">clear, board-ready plan</strong> your team can execute.</p>
+                    </div>
+                    <div class="glass-card p-5 flex items-start gap-4">
+                        <div class="w-2 h-2 rounded-full bg-neo-violet mt-2.5 flex-shrink-0"></div>
+                        <p class="text-slate-300 leading-relaxed">Need to <strong class="text-white">align marketing, comms, legal, and IT</strong> around a safe, practical approach to AI.</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <a href="#bottomForm" class="btn-secondary inline-block">
+                        Yes, this is me &ndash; email me the 90-day plan
+                    </a>
                 </div>
             </div>
-            <div class="chart-container w-full h-80">
-                <canvas id="trendChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 3: WHAT YOU GET INSIDE ========== -->
+    <section class="py-20 md:py-28 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-6">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+                        What You'll Get Inside the <span class="gradient-text">90-Day AI Action Plan</span>
+                    </h2>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        You're not getting yet another fluffy AI ebook. You're getting a concrete, plug-and-play plan you can start using with your team this week.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Deliverable 1 -->
+            <div class="reveal mt-16">
+                <div class="glass-card p-8 md:p-10">
+                    <div class="flex items-start gap-5">
+                        <div class="number-circle">1</div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-3">
+                                AI Opportunity Map for Marketing & Comms
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed">
+                                See exactly where AI can create leverage across your marketing and communications workflows. We map high-impact use cases to specific roles and tasks&mdash;campaign planning, content creation, stakeholder messaging, internal updates, leadership comms, and more&mdash;so you know where to start and what to ignore.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deliverable 2 -->
+            <div class="reveal mt-6">
+                <div class="glass-card p-8 md:p-10">
+                    <div class="flex items-start gap-5">
+                        <div class="number-circle">2</div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-3">
+                                Ready-to-Use Workflows and Prompts
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed mb-4">
+                                Get concrete, copy-paste workflows and prompts for 10+ high-value activities, including:
+                            </p>
+                            <ul class="space-y-2.5 text-slate-400">
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-pink flex-shrink-0"></span>
+                                    Campaign and content brief creation
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-magenta flex-shrink-0"></span>
+                                    Multi-channel content repurposing
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-violet flex-shrink-0"></span>
+                                    Press release and announcement drafting
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-indigo flex-shrink-0"></span>
+                                    Internal leadership emails and town-hall scripts
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-pink flex-shrink-0"></span>
+                                    FAQ and Q&A preparation for stakeholders
+                                </li>
+                            </ul>
+                            <p class="text-slate-500 text-sm mt-4 italic">
+                                You don't need to be "good at prompting." Just plug these into your tools and adapt to your brand.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deliverable 3 -->
+            <div class="reveal mt-6">
+                <div class="glass-card p-8 md:p-10">
+                    <div class="flex items-start gap-5">
+                        <div class="number-circle">3</div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-3">
+                                A Week-by-Week 90-Day Implementation Roadmap
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed mb-5">
+                                Move from scattered experiments to structured adoption. The roadmap breaks the next 90 days into simple weekly actions:
+                            </p>
+                            <div class="space-y-5">
+                                <div class="timeline-item">
+                                    <p class="text-white font-semibold">Week 1&ndash;2</p>
+                                    <p class="text-slate-400 text-sm">Align leadership and pick your first 3&ndash;5 workflows</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <p class="text-white font-semibold">Week 3&ndash;6</p>
+                                    <p class="text-slate-400 text-sm">Run low-risk pilots and measure results</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <p class="text-white font-semibold">Week 7&ndash;10</p>
+                                    <p class="text-slate-400 text-sm">Scale what works across the team</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <p class="text-white font-semibold">Week 11&ndash;12</p>
+                                    <p class="text-slate-400 text-sm">Formalize standards, playbooks, and governance</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-500 text-sm mt-5 italic">
+                                You'll know exactly what to do, when, and with whom.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deliverable 4 -->
+            <div class="reveal mt-6">
+                <div class="glass-card p-8 md:p-10">
+                    <div class="flex items-start gap-5">
+                        <div class="number-circle">4</div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-3">
+                                AI Policy Starter Template for Marketing & Comms
+                            </h3>
+                            <p class="text-slate-400 leading-relaxed mb-4">
+                                Use our simple AI usage guideline template built for in-house marketing and comms teams. Adapt it with your legal, HR, and IT stakeholders in under an hour to cover:
+                            </p>
+                            <ul class="space-y-2.5 text-slate-400">
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-pink flex-shrink-0"></span>
+                                    Approved tools and use cases
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-magenta flex-shrink-0"></span>
+                                    Brand voice and content quality standards
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-violet flex-shrink-0"></span>
+                                    Data privacy, confidentiality, and IP considerations
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-neo-indigo flex-shrink-0"></span>
+                                    Review and approval workflows
+                                </li>
+                            </ul>
+                            <p class="text-slate-500 text-sm mt-4 italic">
+                                No legalese. No 40-page policy. Just a pragmatic starting point you can refine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secondary CTA -->
+            <div class="reveal text-center mt-12">
+                <a href="#bottomForm" class="btn-primary inline-block">
+                    Get Instant Access to the 90-Day AI Action Plan
+                </a>
             </div>
         </div>
+    </section>
 
-    </main>
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 4: WHY THIS IS DIFFERENT ========== -->
+    <section class="py-20 md:py-28 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-10">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
+                        Why This Isn't Just Another <span class="gradient-text-subtle">Generic AI Guide</span>
+                    </h2>
+                    <p class="text-lg text-slate-500 font-medium">
+                        Built by practitioners, for in-house teams with something to lose.
+                    </p>
+                </div>
+
+                <div class="space-y-6 text-slate-400 leading-relaxed text-lg">
+                    <p>
+                        Most AI content is built for freelancers, agencies, or solo marketers chasing hacks. <strong class="text-slate-200">That's not your world.</strong>
+                    </p>
+                    <p>
+                        You operate in an environment with brand risk, regulatory pressure, internal stakeholders, works councils, and leadership scrutiny. You can't just "move fast and break things"&mdash;<strong class="text-slate-200">you need to move fast and protect trust.</strong>
+                    </p>
+                    <p>
+                        This 90-day plan is built specifically for in-house marketing and communications teams in medium to large organizations, with:
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-5 mt-8">
+                    <div class="glass-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-[rgba(255,45,120,0.2)] to-[rgba(255,45,120,0.05)] flex items-center justify-center">
+                            <svg class="w-6 h-6 text-neo-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">A combined <strong class="text-white">marketing and communications lens</strong>&mdash;covering campaigns, brand, PR, and internal comms.</p>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-[rgba(217,70,239,0.2)] to-[rgba(217,70,239,0.05)] flex items-center justify-center">
+                            <svg class="w-6 h-6 text-neo-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">A <strong class="text-white">European-focused view</strong> on governance, EU AI Act, and GDPR.</p>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-[rgba(139,92,246,0.2)] to-[rgba(139,92,246,0.05)] flex items-center justify-center">
+                            <svg class="w-6 h-6 text-neo-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed"><strong class="text-white">Real-world, practitioner-tested workflows</strong> instead of abstract frameworks.</p>
+                    </div>
+                </div>
+
+                <p class="text-center text-slate-500 mt-8 italic text-lg">
+                    If you own the reputation and narrative of your organization, this is built for you.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 5: ABOUT THE CREATORS ========== -->
+    <section class="py-20 md:py-28 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
+                        Who's <span class="gradient-text-subtle">Behind This</span>?
+                    </h2>
+                    <p class="text-lg text-slate-500">
+                        Practitioners in Marketing, Communications, and Applied AI
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Founder 1 -->
+                    <div class="glass-card p-8">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-neo-pink to-neo-magenta flex items-center justify-center text-white text-2xl font-bold font-display">
+                                F1
+                            </div>
+                            <div>
+                                <h3 class="font-display text-lg font-bold text-white">[Your Name]</h3>
+                                <p class="text-neo-pink text-sm font-medium">Marketing Strategist & AI Enablement Consultant</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 leading-relaxed text-sm">
+                            [Your Name] has spent [X+] years leading and advising marketing and digital teams across [industries/regions]. He specializes in martech, AI-driven workflows, and building data-informed campaign engines for medium and large organizations. He's worked with teams who needed to move from "we should use AI" to "AI is how we work now"&mdash;without adding chaos.
+                        </p>
+                    </div>
+
+                    <!-- Founder 2 -->
+                    <div class="glass-card p-8">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-neo-magenta to-neo-violet flex items-center justify-center text-white text-2xl font-bold font-display">
+                                F2
+                            </div>
+                            <div>
+                                <h3 class="font-display text-lg font-bold text-white">[Your Wife's Name]</h3>
+                                <p class="text-neo-magenta text-sm font-medium">Communications & Internal Comms Expert</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 leading-relaxed text-sm">
+                            [Her Name] has [Y+] years of experience in corporate communications, internal comms, and leadership messaging. She helps organizations navigate complex change, protect their reputations, and communicate in a way that builds trust. She has been using generative AI as a "comms co-pilot" for leadership messaging, crisis preparation, and employee communications since the earliest days of these tools.
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-center text-slate-400 mt-8 italic max-w-3xl mx-auto leading-relaxed">
+                    Together, we combine deep marketing and communications expertise with hands-on AI practice to give your team plans and workflows that actually work in the real world&mdash;not in theory.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 6: FAQ ========== -->
+    <section class="py-20 md:py-28 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
+                        Frequently Asked <span class="gradient-text-subtle">Questions</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item active">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>Is this really free? What's the catch?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                Yes, it's 100% free. No credit card. No trial. We created this because most marketing and comms leaders are overwhelmed by AI noise and don't know where to start safely. In return, we'll send you occasional, relevant emails about AI for marketing and communications, and you'll have the option (never the obligation) to join our community or work with us more closely.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>Will this work if my team is at a beginner level with AI?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                Yes. The plan is designed assuming your team has little to no formal AI training. You don't need a technical background. If your team is further along, you'll still benefit from the structure, governance templates, and workflow libraries.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>What if we're already experimenting with AI tools?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                Perfect. Many teams are experimenting in silos with tools like ChatGPT, Copilot, or Claude. This plan helps you turn scattered experiments into a coordinated, measured program&mdash;with clear workflows, standards, and governance&mdash;so you can scale what works and shut down what doesn't.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="faq-item">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>Is this only for EU-based organizations?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                No. The frameworks work globally. That said, we've built this with a strong focus on European organizations and those subject to EU regulations (EU AI Act, GDPR). If you operate in or with Europe, you'll find this especially relevant.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="faq-item">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>How will my information be used?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                We'll use your details to send you the 90-day plan and follow-up resources around AI for marketing and communications. We will never sell your data. You can unsubscribe at any time with one click.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 6 -->
+                    <div class="faq-item">
+                        <button class="faq-toggle" onclick="toggleFaq(this)">
+                            <span>Can I share this with my team?</span>
+                            <span class="icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-content-inner">
+                                Yes. In fact, we encourage it. Share the plan with your marketing, comms, HR, and IT colleagues and use it as a starting point for your AI adoption discussions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- ========== SECTION 7: FINAL CTA ========== -->
+    <section id="bottomForm" class="py-20 md:py-28 relative hero-bg">
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <div class="text-center mb-10">
+                    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight">
+                        Lead Your Team's AI Transformation with a <span class="gradient-text">Clear 90-Day Plan</span>
+                    </h2>
+                    <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-2">
+                        You don't need another vague webinar or tool demo. You need a concrete, low-risk way to bring AI into your marketing and communications workflows&mdash;one that your leadership, legal, and your team can all get behind.
+                    </p>
+                    <p class="text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                        Get the exact 90-day action plan we use with marketing and comms leaders who want to move from "we should use AI" to "this is how we work now."
+                    </p>
+                </div>
+
+                <!-- Bullet Recap -->
+                <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-12">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-neo-pink flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <p class="text-slate-300 text-sm">Discover where AI can create real leverage in your team.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-neo-magenta flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <p class="text-slate-300 text-sm">Get ready-to-use workflows and prompts for marketing and comms.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-neo-violet flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <p class="text-slate-300 text-sm">Follow a week-by-week roadmap to embed AI in 90 days.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-neo-pink flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <p class="text-slate-300 text-sm">Protect your brand, reputation, and compliance as you scale.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Form -->
+                <div class="glass-card p-8 max-w-lg mx-auto glow-pink">
+                    <form id="bottomFormElement" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                        <div>
+                            <label for="bottomFirstName" class="block text-sm font-medium text-slate-400 mb-1.5">First name</label>
+                            <input type="text" id="bottomFirstName" name="firstName" class="form-input" placeholder="Jane" required>
+                        </div>
+                        <div>
+                            <label for="bottomWorkEmail" class="block text-sm font-medium text-slate-400 mb-1.5">Work email</label>
+                            <input type="email" id="bottomWorkEmail" name="workEmail" class="form-input" placeholder="jane@company.com" required>
+                        </div>
+                        <div>
+                            <label for="bottomRole" class="block text-sm font-medium text-slate-400 mb-1.5">Role</label>
+                            <select id="bottomRole" name="role" class="form-input" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="head-marketing">Head of Marketing</option>
+                                <option value="head-comms">Head of Communications</option>
+                                <option value="marketing-director">Marketing Director</option>
+                                <option value="comms-director">Communications Director</option>
+                                <option value="marketing-manager">Marketing Manager</option>
+                                <option value="comms-manager">Communications Manager</option>
+                                <option value="vp-marketing">VP Marketing</option>
+                                <option value="cmo">CMO</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-full">
+                            Email Me the 90-Day AI Action Plan
+                        </button>
+                    </form>
+                    <p class="text-xs text-slate-500 mt-4 text-center">
+                        Takes less than 30 seconds. Start implementing in the next 7 days.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
-        <div class="max-w-4xl mx-auto px-4">
-            <p class="mb-4 font-semibold text-white">Methodology Note</p>
-            <p class="text-sm mb-8">
-                Data synthesized from simulated 2024-2025 industry surveys involving 1,500+ marketing professionals across SaaS, Retail, and Agency sectors. "Adoption" defined as weekly usage of at least one Generative AI tool.
-            </p>
-            <p class="text-xs">&copy; WeTalkData.com - AI Marketing Insights- State of the Art.</p>
+    <footer class="py-8 border-t border-[rgba(255,255,255,0.04)]">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-xs text-slate-600">&copy; 2026 WeTalkData.com &mdash; AI for Marketing & Communications Teams</p>
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
-    <script>
-        // --- Utility: Wrap Labels for Chart.js ---
-        // Splits long strings into arrays of strings for multi-line axis labels
-        function wrapLabel(str, maxChars) {
-            if (str.length <= maxChars) return str;
-            const words = str.split(' ');
-            const lines = [];
-            let currentLine = words[0];
+</div><!-- end mainPage -->
 
-            for (let i = 1; i < words.length; i++) {
-                if ((currentLine + " " + words[i]).length < maxChars) {
-                    currentLine += " " + words[i];
-                } else {
-                    lines.push(currentLine);
-                    currentLine = words[i];
-                }
-            }
-            lines.push(currentLine);
-            return lines;
+
+<!-- ==================== THANK YOU PAGE ==================== -->
+<div id="thankYouPage">
+    <section class="min-h-screen flex items-center hero-bg relative">
+        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <div class="glass-card p-10 md:p-14 glow-pink-subtle">
+
+                <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-neo-pink to-neo-magenta flex items-center justify-center">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
+
+                <h1 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
+                    Your 90-Day AI Action Plan Is on Its Way to Your Inbox
+                </h1>
+                <p class="text-xl text-slate-400 mb-8">
+                    Want help tailoring it to your team in 15 minutes?
+                </p>
+
+                <div class="text-left max-w-lg mx-auto mb-8">
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        We've just emailed you the 90-day plan. It should arrive in the next few minutes.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        If you'd like a quick, no-pressure conversation about how to apply it to your specific team and organization, you can book a short <strong class="text-white">AI Readiness Check</strong> call with us.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        In 15&ndash;20 minutes, we'll:
+                    </p>
+                    <ul class="space-y-3 text-slate-400 mb-6">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-neo-pink flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            Review where your marketing/comms team is today.
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-neo-magenta flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            Identify 2&ndash;3 quick-win workflows you can improve with AI.
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-neo-violet flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            Share one concrete next step tailored to your situation.
+                        </li>
+                    </ul>
+                    <p class="text-slate-500 italic text-sm">
+                        No sales pitch. If there's a fit for deeper work, we'll let you know. If not, you'll still leave with clarity and next steps.
+                    </p>
+                </div>
+
+                <a href="#" class="btn-primary inline-block mb-4">
+                    Book a 15-Minute AI Readiness Check
+                </a>
+                <br>
+                <a href="#" onclick="showMainPage(); return false;" class="text-slate-500 hover:text-neo-pink text-sm transition-colors">
+                    Or return to the homepage
+                </a>
+            </div>
+        </div>
+    </section>
+</div><!-- end thankYouPage -->
+
+
+<!-- JavaScript -->
+<script>
+    // --- FAQ Accordion ---
+    function toggleFaq(btn) {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        // Open clicked (if it was closed)
+        if (!isActive) {
+            item.classList.add('active');
         }
+    }
 
-        // --- Utility: Process Labels Array ---
-        function processLabels(labels) {
-            return labels.map(label => wrapLabel(label, 16));
-        }
+    // --- Form Submission ---
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        // Show thank you page
+        document.getElementById('mainPage').classList.add('hidden');
+        document.getElementById('thankYouPage').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        // --- Common Tooltip Configuration (MANDATORY) ---
-        const commonTooltipOptions = {
-            backgroundColor: 'rgba(15, 23, 42, 0.9)', // Slate 900
-            titleFont: { size: 13, family: 'Inter' },
-            bodyFont: { size: 13, family: 'Inter' },
-            padding: 12,
-            cornerRadius: 8,
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
-                    } else {
-                        return label;
-                    }
-                }
-            }
-        };
+    function showMainPage() {
+        document.getElementById('mainPage').classList.remove('hidden');
+        document.getElementById('thankYouPage').classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        // --- Common Chart Defaults ---
-        Chart.defaults.font.family = 'Inter';
-        Chart.defaults.color = '#64748b';
-        Chart.defaults.scale.grid.color = '#e2e8f0';
+    // --- Scroll Reveal Animation ---
+    const revealElements = document.querySelectorAll('.reveal');
 
-        // ==========================================
-        // Chart 1: Adoption Rate (Doughnut)
-        // ==========================================
-        const adoptionCtx = document.getElementById('adoptionChart').getContext('2d');
-        const adoptionLabels = ['Fully Integrated', 'Experimenting', 'Not Using', 'Prohibited'];
-        
-        new Chart(adoptionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: processLabels(adoptionLabels),
-                datasets: [{
-                    data: [45, 28, 20, 7],
-                    backgroundColor: [
-                        '#06b6d4', // Cyan 500
-                        '#67e8f9', // Cyan 300
-                        '#cbd5e1', // Slate 300
-                        '#ef4444'  // Red 500
-                    ],
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '70%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { usePointStyle: true, padding: 20 }
-                    },
-                    tooltip: commonTooltipOptions
-                }
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
             }
         });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
-        // ==========================================
-        // Chart 2: Use Cases (Horizontal Bar)
-        // ==========================================
-        const useCaseCtx = document.getElementById('useCaseChart').getContext('2d');
-        const useCaseRawLabels = [
-            'Copywriting & Blog Content',
-            'Social Media Captions',
-            'Email Marketing Drafts',
-            'Brainstorming & Ideation',
-            'Image Generation',
-            'SEO Meta Data',
-            'Coding/Technical Tasks'
-        ];
+    revealElements.forEach(el => revealObserver.observe(el));
 
-        new Chart(useCaseCtx, {
-            type: 'bar',
-            data: {
-                labels: processLabels(useCaseRawLabels),
-                datasets: [{
-                    label: '% of Marketers Using',
-                    data: [76, 72, 68, 65, 45, 40, 25],
-                    backgroundColor: '#ec4899', // Pink 500
-                    borderRadius: 4,
-                }]
-            },
-            options: {
-                indexAxis: 'y', // Horizontal
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: 100,
-                        grid: { display: true }
-                    },
-                    y: {
-                        grid: { display: false }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: commonTooltipOptions
-                }
+    // --- Smooth scroll for anchor links ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
+    });
+</script>
 
-        // ==========================================
-        // Chart 3: Risks (Radar)
-        // ==========================================
-        const riskCtx = document.getElementById('riskChart').getContext('2d');
-        const riskLabels = [
-            'Inaccuracy/Hallucinations',
-            'Copyright/Legal Risks',
-            'Data Privacy/Security',
-            'Lack of Internal Skills',
-            'Loss of Human Touch',
-            'Brand Voice Consistency'
-        ];
-
-        new Chart(riskCtx, {
-            type: 'radar',
-            data: {
-                labels: processLabels(riskLabels),
-                datasets: [{
-                    label: 'Concern Level (1-10)',
-                    data: [8.5, 7.8, 7.5, 6.0, 6.5, 5.5],
-                    fill: true,
-                    backgroundColor: 'rgba(139, 92, 246, 0.2)', // Violet
-                    borderColor: '#8b5cf6',
-                    pointBackgroundColor: '#8b5cf6',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#8b5cf6'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        angleLines: { color: '#e2e8f0' },
-                        grid: { color: '#e2e8f0' },
-                        pointLabels: {
-                            font: { size: 11 }
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 10
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: commonTooltipOptions
-                }
-            }
-        });
-
-        // ==========================================
-        // Chart 4: Efficiency (Plotly Histogram)
-        // ==========================================
-        // We want a nice smooth distribution showing typical savings
-        // Generating some distribution data for the visualization
-        
-        // Setup data: X axis = Hours Saved, Y axis = Count of Respondents (Simulated)
-        const xValues = ['0-1h', '1-3h', '3-5h', '5-10h', '10h+'];
-        const yValues = [5, 15, 35, 30, 15]; // Percentages
-
-        const plotlyData = [{
-            x: xValues,
-            y: yValues,
-            type: 'bar',
-            marker: {
-                color: ['#cbd5e1', '#a5f3fc', '#22d3ee', '#06b6d4', '#0891b2'], // Gradient Blue/Cyan
-            },
-        }];
-
-        const plotlyLayout = {
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            margin: { t: 20, r: 20, l: 40, b: 40 },
-            showlegend: false,
-            font: { family: 'Inter', color: '#64748b' },
-            xaxis: { 
-                title: 'Hours Saved Per Week',
-                tickfont: { size: 12 }
-            },
-            yaxis: { 
-                title: '% of Respondents',
-                gridcolor: '#e2e8f0'
-            },
-            bargap: 0.2
-        };
-
-        const plotlyConfig = {
-            responsive: true,
-            displayModeBar: false
-        };
-
-        Plotly.newPlot('plotlyEfficiency', plotlyData, plotlyLayout, plotlyConfig);
-
-
-        // ==========================================
-        // Chart 5: Trend (Line)
-        // ==========================================
-        const trendCtx = document.getElementById('trendChart').getContext('2d');
-        
-        new Chart(trendCtx, {
-            type: 'line',
-            data: {
-                labels: ['2022', '2023', '2024', '2025 (Proj)', '2026 (Proj)'],
-                datasets: [{
-                    label: '% Budget Allocation',
-                    data: [2, 5, 12, 18, 26],
-                    fill: true,
-                    borderColor: '#06b6d4', // Cyan
-                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
-                    tension: 0.4, // Smooth curve
-                    pointRadius: 6,
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { borderDash: [5, 5] },
-                        title: { display: true, text: '% of Marketing Budget' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: commonTooltipOptions
-                }
-            }
-        });
-
-    </script>
 </body>
 </html>
