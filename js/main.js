@@ -105,20 +105,40 @@
 
             var submitBtn = contactForm.querySelector('button[type="submit"]');
             var originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Message Sent!';
-            submitBtn.style.backgroundColor = '#2dd4a8';
-            submitBtn.style.borderColor = '#2dd4a8';
-            submitBtn.style.color = '#0a1a1a';
+            submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            setTimeout(function () {
-                submitBtn.textContent = originalText;
-                submitBtn.style.backgroundColor = '';
-                submitBtn.style.borderColor = '';
-                submitBtn.style.color = '';
-                submitBtn.disabled = false;
-                contactForm.reset();
-            }, 3000);
+            var formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(function (response) {
+                if (response.ok) {
+                    submitBtn.textContent = 'Message Sent!';
+                    submitBtn.style.backgroundColor = '#2dd4a8';
+                    submitBtn.style.borderColor = '#2dd4a8';
+                    submitBtn.style.color = '#0a1a1a';
+                    contactForm.reset();
+                } else {
+                    submitBtn.textContent = 'Failed — try again';
+                    submitBtn.style.backgroundColor = '#e74c3c';
+                    submitBtn.style.borderColor = '#e74c3c';
+                }
+            }).catch(function () {
+                submitBtn.textContent = 'Failed — try again';
+                submitBtn.style.backgroundColor = '#e74c3c';
+                submitBtn.style.borderColor = '#e74c3c';
+            }).finally(function () {
+                setTimeout(function () {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.backgroundColor = '';
+                    submitBtn.style.borderColor = '';
+                    submitBtn.style.color = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            });
         });
     }
 
